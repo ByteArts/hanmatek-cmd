@@ -118,6 +118,7 @@ class HanmatekCmd(Cmd):
 
         try:
             self.hc.set_status(target_state)
+            print(f"Device status: {'Enabled' if self.hc.get_status() else 'Disabled'}\n")
         except Exception as e:
             print(f"Error: {e}")
 
