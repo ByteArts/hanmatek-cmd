@@ -10,15 +10,17 @@ else:
     power_supply_port = "COM1" # windows
 
 
-
+hanmatek = None
 is_powered_on = False
 target_voltage = 0.0
 target_current = 0.0
 
 
 def read_data(display):
+    assert hanmatek is not None
     try:
         value = hanmatek.read_registers(0x00, 0x33)
+
     except Exception as err:
         print(f'Error communicating with device: {str(err)}')
         return []
@@ -61,6 +63,7 @@ def read_data(display):
 
 # currently unused
 def read_limits():
+    assert hanmatek is not None
     value = hanmatek.read_registers(0x1000, 0x05)
 
     print("mVoltage: " + str(value[0x00]))
@@ -72,6 +75,7 @@ def read_limits():
 
 # currently unused
 def read_settings():
+    assert hanmatek is not None
     value = hanmatek.read_registers(0xC110, 0x20)
 
     print("ul: " + str(value[0x00]))
@@ -81,7 +85,7 @@ def read_settings():
 
 
 def set_voltage(val):
-    global hanmatek
+    assert hanmatek is not None
     try:
         hanmatek.write_register(0x30, round(val * 100))
     except:
@@ -89,7 +93,7 @@ def set_voltage(val):
 
 
 def set_current(val):
-    global hanmatek
+    assert hanmatek is not None
     try:
         hanmatek.write_register(0x31, round(val * 1000))
     except:
@@ -97,7 +101,7 @@ def set_current(val):
 
 
 def power_off():
-    global hanmatek
+    assert hanmatek is not None
     try:
         hanmatek.write_register(1, 0)
     except:
@@ -105,7 +109,7 @@ def power_off():
 
 
 def power_on():
-    global hanmatek
+    assert hanmatek is not None
     try:
         hanmatek.write_register(1, 1)
     except:
@@ -123,6 +127,7 @@ def update_data(display):
 
 def main():
     global is_powered_on, target_voltage, target_current, power_supply_port, hanmatek
+    assert hanmatek is not None
 
     update_data(True)
     inp = "h"

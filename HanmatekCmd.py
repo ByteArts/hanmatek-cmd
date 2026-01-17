@@ -183,10 +183,10 @@ class HanmatekCmd(Cmd):
         pass
 
 if __name__ == "__main__":
-    if 'linux' in platform.lower():
-        default_port = "/dev/ttyUSB0" # linux
+    if 'win' in platform.lower():
+        default_port = "COM1" # windows
     else:
-        default_port = "COM13" # windows
+        default_port = "/dev/ttyUSB0" # linux or macOS
 
     parser = ArgumentParser(description='Hanmatek Power Supply Control.')
     parser.add_argument('-p', '--portname', default=default_port, help='set serial port name', type=str)
